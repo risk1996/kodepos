@@ -1,12 +1,33 @@
+mod cmd_populate;
 mod data_structure;
 
-use std::fs;
+use anyhow::Result;
+use clap::{Parser, Subcommand};
 
-use data_structure::Data;
+#[derive(Debug, Parser)]
+struct Cli {
+  #[command(subcommand)]
+  command: Command,
+}
 
-fn main() {
-  let data = fs::read_to_string("./data/kodepos.json").expect("Failed to master data");
-  let data = serde_json::from_str::<Data>(&data).expect("Failed to parse data");
+#[derive(Debug, Subcommand)]
+enum Command {
+  #[clap(name = "populate")]
+  Populate {
+    #[clap(short, long)]
+    input: String,
+    #[clap(short, long)]
+    output: String,
+  },
+}
 
-  println!("{:?}", data);
+#[tokio::main]
+async fn main() -> Result<()> {
+  let cli = Cli::parse();
+
+  match cli.command {
+    | Command::Populate { input, output } => cmd_populate::populate(input, output)?,
+  };
+
+  Ok(())
 }
