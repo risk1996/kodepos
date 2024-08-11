@@ -1,5 +1,7 @@
 {
   "cSpell.words": [
+    "iden",
     "repr"
-  ]
+  ],
+  "sqltools.useNodeRuntime": true
 }
