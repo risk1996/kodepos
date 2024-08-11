@@ -1,5 +1,6 @@
 mod cmd_populate;
 mod data_structure;
+mod model;
 
 use anyhow::Result;
 use clap::{Parser, Subcommand};
