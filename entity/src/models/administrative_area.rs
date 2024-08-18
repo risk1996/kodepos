@@ -1,9 +1,12 @@
 use sea_orm::entity::prelude::*;
 use sea_orm::DeriveEntityModel;
+use serde::{Deserialize, Serialize};
 
 use crate::enums::AdministrativeLevel;
 
-#[derive(Debug, Clone, PartialEq, Eq, Hash, Ord, PartialOrd, DeriveEntityModel)]
+#[derive(
+  Debug, Clone, PartialEq, Eq, Hash, Ord, PartialOrd, Serialize, Deserialize, DeriveEntityModel,
+)]
 #[sea_orm(table_name = "administrative_area")]
 pub struct Model {
   #[sea_orm(primary_key)]
