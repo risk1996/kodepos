@@ -20,7 +20,6 @@ pub async fn populate(input: String, db: &DatabaseConnection) -> Result<()> {
 
   for datum in data.chunks(64) {
     administrative_area::Entity::insert_many(datum.to_vec())
-      .on_conflict_do_nothing()
       .exec(db)
       .await?;
   }
