@@ -2,11 +2,8 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub enum SearchColumn {
-  #[serde(rename = "id")]
   Id,
-  #[serde(rename = "name")]
   Name,
-  #[serde(rename = "kodepos")]
   PostalCode,
 }
 

@@ -1,7 +1,7 @@
 use std::sync::Arc;
 
 use axum::{
-  extract::{Path, Query, State},
+  extract::{Query, State},
   Json,
 };
 use entity::models::administrative_area;
@@ -14,8 +14,29 @@ use crate::{
   state::AppState,
 };
 
-pub async fn get_administrative_areas(
-  Path(column): Path<SearchColumn>,
+pub async fn get_by_id(
+  state: State<Arc<AppState>>,
+  query: Query<ApiSearchRequest>,
+) -> Result<Json<ApiListResponse<administrative_area::Model>>, AppError> {
+  get_administrative_areas(&SearchColumn::Id, state, query).await
+}
+
+pub async fn get_by_name(
+  state: State<Arc<AppState>>,
+  query: Query<ApiSearchRequest>,
+) -> Result<Json<ApiListResponse<administrative_area::Model>>, AppError> {
+  get_administrative_areas(&SearchColumn::Name, state, query).await
+}
+
+pub async fn get_by_postal_code(
+  state: State<Arc<AppState>>,
+  query: Query<ApiSearchRequest>,
+) -> Result<Json<ApiListResponse<administrative_area::Model>>, AppError> {
+  get_administrative_areas(&SearchColumn::PostalCode, state, query).await
+}
+
+async fn get_administrative_areas(
+  column: &SearchColumn,
   State(state): State<Arc<AppState>>,
   Query(request): Query<ApiSearchRequest>,
 ) -> Result<Json<ApiListResponse<administrative_area::Model>>, AppError> {

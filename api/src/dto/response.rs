@@ -17,11 +17,7 @@ impl<T> ApiListResponse<T> {
     let element_count = data.len();
     let page_count = (total as f64 / size as f64).ceil() as usize;
     let is_first = page == 0;
-    let is_last = if page_count == 0 {
-      true
-    } else {
-      page == page_count - 1
-    };
+    let is_last = page_count.saturating_sub(1).eq(&page);
 
     Self {
       data,
